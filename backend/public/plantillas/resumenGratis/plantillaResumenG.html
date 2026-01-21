@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen</title>
+    <link rel="icon" type="image/png" href="/VaultNetLogo.png">
+    <link rel="stylesheet" href="/css/plantillas/resumenGratis/resumenGratis_Styles.css">
+</head>
+<body>
+    <header>
+        <button class="logo-btn" onclick="window.location.href='/'">VAULT.net</button>
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar en la lista..." disabled>
+        </div>
+        <button class="upload-btn" onclick="window.location.href='/upload'">Subir archivos</button>
+    </header>
+
+    <main>
+        <section class="summary-container">
+            <div class="summary-card">
+                <div class="image-section">
+                    <div class="file-preview">
+                        <span class="file-badge">Vault local</span>
+                        <h3>Archivos publicados</h3>
+                        <p>Descargalos individualmente o en ZIP.</p>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h2>Resumen</h2>
+                    <p class="description">Descripcion breve.</p>
+                    <p class="author">Servidor local</p>
+
+                    <ul class="file-list">
+                        <!-- FILE_LIST_PLACEHOLDER -->
+                    </ul>
+
+                    <div class="button-group">
+                        <button class="download-btn">Descargar</button>
+                        <form action="/delete/ID" method="POST">
+                            <button type="submit" class="danger-btn">Borrar publicacion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

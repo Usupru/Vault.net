@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAULT.net</title>
+    <link rel="icon" type="image/png" href="/VaultNetLogo.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <button class="logo-btn" onclick="window.location.href='/'">VAULT.net</button>
+        </div>
+        <div class="cta-buttons">
+            <button class="cta-btn login-btn" onclick="window.location.href='/login'">Iniciar sesi&oacute;n</button>
+            <button class="cta-btn register-btn" onclick="window.location.href='/upload'">Subir</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-text">
+                <h2>Tu file server privado en la red local</h2>
+                <p>VAULT.net es un hub r&aacute;pido para guardar y descargar archivos dentro de tu home network. Sin nube, complicaciones: solo tu biblioteca.</p>
+                <div class="hero-buttons">
+                    <button class="hero-btn explore-btn" onclick="window.location.href='/explore'">Explorar archivos</button>
+                    <button class="hero-btn upload-btn" onclick="window.location.href='/upload'">Subir archivos</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-panel">
+                    <div class="panel-label">Espacio disponible</div>
+                    <div class="panel-title">Host activo</div>
+                    <div class="panel-metric">{{FREE_SPACE}}</div>
+                    <div class="panel-sub">Vault local en la red</div>
+                </div>
+                <div class="hero-panel accent">
+                    <div class="panel-label">Archivos en Vault</div>
+                    <div class="panel-title">Biblioteca</div>
+                    <div class="panel-metric">{{FILE_COUNT}} archivos</div>
+                    <div class="panel-sub">Descarga individual o ZIP</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h3>Dise&ntilde;ado para tu casa</h3>
+            <p>Acceso r&aacute;pido desde cualquier dispositivo en tu WiFi. Busc&aacute;, previsualiz&aacute; y descarg&aacute; sin depender de internet.</p>
+        </section>
+
+        <section class="about-section">
+            <h3>Organizaci&oacute;n clara</h3>
+            <p>Cada subida queda publicada como tarjeta. Entr&aacute;, revis&aacute; los archivos y baj&aacute; todo en ZIP o uno por uno.</p>
+        </section>
+
+        <section class="about-section">
+            <h3>Seguro y simple</h3>
+            <p>No hay terceros. Tus archivos se quedan en tu servidor. Tu red, tus reglas.</p>
+        </section>
+
+        <section class="contact-section">
+            <h3>&iquest;Listo para centralizar tu biblioteca?</h3>
+            <a href="/upload" class="contact-btn">Empezar ahora</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VAULT.net. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

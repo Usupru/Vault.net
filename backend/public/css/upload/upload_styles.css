@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+    --bg: #0f1218;
+    --surface: #1c2330;
+    --surface-soft: #242d3d;
+    --accent: #34d399;
+    --accent-strong: #0ea5e9;
+    --text: #e6edf5;
+    --muted: #9aa7bd;
+    --danger: #f87171;
+    --shadow: 0 20px 60px rgba(6, 10, 18, 0.4);
+    --radius: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top left, rgba(52, 211, 153, 0.18), transparent 45%),
+        linear-gradient(160deg, #0b0f14 0%, #111827 50%, #0f172a 100%);
+    color: var(--text);
+    font-size: 16px;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 36px;
+    background: rgba(15, 18, 24, 0.75);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-btn {
+    background: none;
+    color: var(--text);
+    border: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.search-bar input {
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    width: clamp(200px, 30vw, 360px);
+    font-size: 0.95rem;
+    background: rgba(17, 23, 34, 0.9);
+    color: var(--text);
+}
+
+.upload-btn {
+    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    color: #081018;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 40px 60px;
+}
+
+.summary-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.summary-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    background: rgba(28, 35, 48, 0.92);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.image-section {
+    position: relative;
+    min-height: 360px;
+    padding: 20px;
+}
+
+.upload-area {
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    background-color: rgba(12, 18, 28, 0.8);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    gap: 16px;
+}
+
+.upload-area:hover {
+    border-color: rgba(52, 211, 153, 0.6);
+    background-color: rgba(12, 18, 28, 0.9);
+}
+
+.upload-area p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.preview-list {
+    list-style: none;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 220px;
+    overflow: auto;
+    padding-right: 8px;
+}
+
+.upload-area.has-files .preview-list {
+    display: flex;
+}
+
+.upload-area.has-files #upload-prompt {
+    display: none;
+}
+
+.preview-item {
+    font-size: 0.95rem;
+    color: var(--text);
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.details-section {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.details-section h2 {
+    font-size: 2rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    outline: none;
+    background-color: rgba(12, 18, 28, 0.9);
+    color: var(--text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"] {
+    font-size: 1.2rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+select {
+    cursor: pointer;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: rgba(52, 211, 153, 0.7);
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+}
+
+.button-group {
+    margin-top: auto;
+}
+
+#error-message {
+    color: var(--danger);
+    min-height: 20px;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    main {
+        padding: 24px 20px 50px;
+    }
+}

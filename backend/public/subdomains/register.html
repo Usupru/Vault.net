@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - VAULT.net</title>
+    <link rel="icon" type="image/png" href="/VaultNetLogo.png">
+    <link rel="stylesheet" href="css/register/register_styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <button class="logo-btn" onclick="window.location.href='/'">VAULT.net</button>
+        </div>
+        <div class="cta-buttons">
+            <button class="cta-btn login-btn" onclick="window.location.href='/login'">Iniciar sesi&oacute;n</button>
+            <button class="cta-btn register-btn" onclick="window.location.href='/upload'">Subir</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="register-section">
+            <div class="register-container">
+                <h2>Crear acceso</h2>
+                <form action="#" method="POST" class="register-form">
+                    <div class="input-group">
+                        <label for="email">Correo electr&oacute;nico</label>
+                        <input type="email" id="email" name="email" placeholder="Correo electr&oacute;nico" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="username">Nombre de usuario</label>
+                        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Contrase&ntilde;a</label>
+                        <input type="password" id="password" name="password" placeholder="Contrase&ntilde;a" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Repetir contrase&ntilde;a</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Repet&iacute; la contrase&ntilde;a" required>
+                    </div>
+                    <button type="submit" class="register-btn-submit">Solicitar acceso</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VAULT.net. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

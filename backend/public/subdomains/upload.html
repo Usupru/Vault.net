@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir archivos - VAULT.net</title>
+    <link rel="icon" type="image/png" href="/VaultNetLogo.png">
+    <link rel="stylesheet" href="/css/upload/upload_styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <button class="logo-btn" onclick="window.location.href='/'">VAULT.net</button>
+        </div>
+        <button class="upload-btn" onclick="window.location.href='/upload'">Subir archivos</button>
+    </header>
+
+    <main>
+        <section class="summary-container">
+            <form id="upload-form" class="summary-card" action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="image-section">
+                    <div id="upload-area" class="upload-area" onclick="document.getElementById('file-input').click()">
+                        <p id="upload-prompt">Hac&eacute; clic para agregar archivos a VAULT.net</p>
+                        <ul id="preview-list" class="preview-list"></ul>
+                        <input type="file" id="file-input" name="files" multiple style="display: none;">
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h2>Subir archivos</h2>
+                    <input type="text" id="title" name="title" placeholder="T&iacute;tulo del archivo" required>
+                    <textarea id="description" name="description" placeholder="Descripci&oacute;n corta (opcional)"></textarea>
+                    <select id="category" name="category">
+                        <option value="" disabled selected>Seleccionar carpeta</option>
+                        <option value="documentos">Documentos</option>
+                        <option value="imagenes">Im&aacute;genes</option>
+                        <option value="media">Media</option>
+                        <option value="proyectos">Proyectos</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                    <p id="error-message"></p>
+                    <div class="button-group">
+                        <button type="submit" class="upload-btn">Publicar en Vault</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="/js/upload.js"></script>
+</body>
+</html>

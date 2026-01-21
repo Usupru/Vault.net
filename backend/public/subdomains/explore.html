@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAULT.net</title>
+    <link rel="icon" type="image/png" href="/VaultNetLogo.png">
+    <link rel="stylesheet" href="css/explore/explore_styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <button class="logo-btn" onclick="window.location.href='/'">VAULT.net</button>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar archivos..." id="searchInput">
+        </div>
+        <button class="upload-btn" onclick="window.location.href='/upload'">Subir archivos</button>
+    </header>
+    <main>
+        <section class="explore-controls">
+            <div class="control-group">
+                <label for="categoryFilter">Categor&iacute;a</label>
+                <select id="categoryFilter">
+                    <option value="all">Todas</option>
+                    <option value="documentos">Documentos</option>
+                    <option value="imagenes">Im&aacute;genes</option>
+                    <option value="media">Media</option>
+                    <option value="proyectos">Proyectos</option>
+                    <option value="otros">Otros</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="sortSelect">Orden</label>
+                <select id="sortSelect">
+                    <option value="newest">M&aacute;s recientes</option>
+                    <option value="oldest">M&aacute;s antiguos</option>
+                    <option value="az">A-Z</option>
+                    <option value="za">Z-A</option>
+                </select>
+            </div>
+            <label class="select-all" for="selectAll">
+                <input type="checkbox" id="selectAll">
+                Seleccionar visibles
+            </label>
+            <button class="danger-btn" id="delete-selected" disabled>Borrar seleccionados</button>
+        </section>
+        <section class="notes">
+            <!-- NOTES_PLACEHOLDER -->
+        </section>
+    </main>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortSelect = document.getElementById('sortSelect');
+        const notesContainer = document.querySelector('.notes');
+        const deleteSelected = document.getElementById('delete-selected');
+        const selectAll = document.getElementById('selectAll');
+
+        // Función para eliminar acentos y hacer la comparación insensible a mayúsculas
+        function removeAccents(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+        function getCreatedValue(note) {
+            const raw = note.getAttribute('data-created') || '';
+            const numeric = Number.parseInt(raw, 10);
+            if (!Number.isNaN(numeric)) {
+                return numeric;
+            }
+            const date = Date.parse(raw);
+            return Number.isNaN(date) ? 0 : date;
+        }
+
+        function updateDeleteButton() {
+            const selected = Array.from(document.querySelectorAll('.note-select:checked'));
+            deleteSelected.disabled = selected.length === 0;
+
+            const visible = Array.from(document.querySelectorAll('.note-card'))
+                .filter(note => note.style.display !== 'none');
+            const visibleSelected = visible.filter(note => {
+                const checkbox = note.querySelector('.note-select');
+                return checkbox && checkbox.checked;
+            });
+            selectAll.checked = visible.length > 0 && visible.length === visibleSelected.length;
+        }
+
+        function applyFilters() {
+            const searchValue = removeAccents(searchInput.value || '');
+            const categoryValue = categoryFilter.value;
+            const notes = Array.from(document.querySelectorAll('.note-card'));
+
+            notes.forEach(note => {
+                const title = removeAccents(note.getAttribute('data-title') || note.querySelector('.note-title').textContent);
+                const description = removeAccents(note.getAttribute('data-description') || '');
+                const category = (note.getAttribute('data-category') || 'otros').toLowerCase();
+
+                const matchesSearch = title.includes(searchValue) || description.includes(searchValue);
+                const matchesCategory = categoryValue === 'all' || category === categoryValue;
+
+                note.style.display = matchesSearch && matchesCategory ? '' : 'none';
+            });
+
+            applySort();
+            updateDeleteButton();
+        }
+
+        function applySort() {
+            const notes = Array.from(document.querySelectorAll('.note-card'));
+            const sortValue = sortSelect.value;
+
+            notes.sort((a, b) => {
+                if (sortValue === 'newest') {
+                    return getCreatedValue(b) - getCreatedValue(a);
+                }
+                if (sortValue === 'oldest') {
+                    return getCreatedValue(a) - getCreatedValue(b);
+                }
+                const titleA = a.getAttribute('data-title') || a.querySelector('.note-title').textContent;
+                const titleB = b.getAttribute('data-title') || b.querySelector('.note-title').textContent;
+                if (sortValue === 'az') {
+                    return titleA.localeCompare(titleB, 'es');
+                }
+                if (sortValue === 'za') {
+                    return titleB.localeCompare(titleA, 'es');
+                }
+                return 0;
+            });
+
+            notes.forEach(note => notesContainer.appendChild(note));
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+        categoryFilter.addEventListener('change', applyFilters);
+        sortSelect.addEventListener('change', applyFilters);
+
+        notesContainer.addEventListener('change', (event) => {
+            if (event.target.classList.contains('note-select')) {
+                updateDeleteButton();
+            }
+        });
+
+        selectAll.addEventListener('change', () => {
+            const notes = Array.from(document.querySelectorAll('.note-card'))
+                .filter(note => note.style.display !== 'none');
+
+            notes.forEach(note => {
+                const checkbox = note.querySelector('.note-select');
+                if (checkbox) {
+                    checkbox.checked = selectAll.checked;
+                }
+            });
+
+            updateDeleteButton();
+        });
+
+        deleteSelected.addEventListener('click', () => {
+            const selected = Array.from(document.querySelectorAll('.note-select:checked'))
+                .map(input => input.value);
+
+            if (selected.length === 0) {
+                return;
+            }
+
+            if (!window.confirm(`¿Seguro que querés borrar ${selected.length} archivo(s)?`)) {
+                return;
+            }
+
+            fetch('/delete-batch', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ ids: selected.join(',') })
+            }).then(() => window.location.reload());
+        });
+
+        applyFilters();
+    </script>
+</body>
+</html>
